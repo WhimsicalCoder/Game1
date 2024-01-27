@@ -46,30 +46,35 @@
             display: flex;
             align-items: center;
         }
-        .sand-watch {
+        .analog-watch {
             width: 20px;
             height: 20px;
-            background: linear-gradient(to bottom, #FFD700, #FFA500, #FF6347);
+            background: conic-gradient(
+                #FF0000 0% 15%, 
+                #FFA500 15% 30%, 
+                #FFFF00 30% 45%, 
+                #008000 45% 60%, 
+                #0000FF 60% 75%, 
+                #4B0082 75% 90%, 
+                #FF0000 90% 100%
+            );
             border-radius: 50%;
             margin-right: 10px;
-            animation: sandWatch 1s infinite linear alternate;
+            animation: rotateHands 1s infinite linear;
         }
-        @keyframes sandWatch {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(50%);
+        @keyframes rotateHands {
+            to {
+                transform: rotate(360deg);
             }
         }
     </style>
 </head>
 <body>
-    <div id="prompt" class="bar">
-        <div><span id="promptText"></span></div>
+    <div class="bar">
+        <div id="promptText"></div>
     </div>
     <div id="timer" class="bar">
-        <div class="sand-watch"></div>
+        <div class="analog-watch"></div>
         <span id="timeRemaining">Time Remaining: 51s</span>
     </div>
     <button id="startButton" onclick="startGame()">Start</button>
