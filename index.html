@@ -52,6 +52,24 @@
         #timer {
             font-size: 1.5em;
             margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .sand-clock {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: sandClock 1s infinite linear alternate;
+        }
+        @keyframes sandClock {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(180deg);
+            }
         }
     </style>
 </head>
@@ -62,9 +80,12 @@
     <div id="suggestedWords" class="bar">
         <div>Suggested Words: <span id="wordSuggestion"></span></div>
     </div>
+    <div id="timer" class="bar">
+        <div class="sand-clock"></div>
+        <span id="timeRemaining">Time Remaining: 51s</span>
+    </div>
     <button id="startButton" onclick="startGame()">Start</button>
     <button id="suggestButton" onclick="suggestWord()">Suggest Word</button>
-    <div id="timer"></div>
 
     <script>
         const prompts = [
@@ -78,13 +99,14 @@
 
         let timer;
         let timeRemaining = 51; // Default time is 51 seconds
+        let suggestWordOption = true;
 
         function startGame() {
             clearInterval(timer);
             timeRemaining = 51;
-            document.getElementById('timer').innerHTML = 'Time Remaining: ' + timeRemaining + 's';
+            document.getElementById('timeRemaining').innerHTML = 'Time Remaining: ' + timeRemaining + 's';
             showRandomPrompt();
-            showRandomWord();
+            if (suggestWordOption) showRandomWord();
             timer = setInterval(updateTimer, 1000);
         }
 
@@ -94,21 +116,9 @@
         }
 
         function suggestWord() {
-            clearInterval(timer);
-            let i = 0;
+            suggestWordOption = !suggestWordOption;
             const suggestButton = document.getElementById('suggestButton');
-            suggestButton.disabled = true;
-
-            const suggestInterval = setInterval(() => {
-                showRandomWord();
-                i++;
-
-                if (i === 10 || i >= timeRemaining) {
-                    clearInterval(suggestInterval);
-                    suggestButton.disabled = false;
-                    startTimer();
-                }
-            }, 7000);
+            suggestButton.innerHTML = suggestWordOption ? "Disable Suggest Word" : "Enable Suggest Word";
         }
 
         function showRandomWord() {
@@ -118,18 +128,13 @@
 
         function updateTimer() {
             timeRemaining--;
-            document.getElementById('timer').innerHTML = 'Time Remaining: ' + timeRemaining + 's';
+            document.getElementById('timeRemaining').innerHTML = 'Time Remaining: ' + timeRemaining + 's';
 
             if (timeRemaining <= 0) {
                 clearInterval(timer);
                 document.getElementById('promptText').innerHTML = 'Game Over';
                 document.getElementById('wordSuggestion').innerHTML = '';
             }
-        }
-
-        function startTimer() {
-            clearInterval(timer);
-            timer = setInterval(updateTimer, 1000);
         }
     </script>
 </body>
