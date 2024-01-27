@@ -43,6 +43,10 @@
             font-size: 1.5em;
             margin-top: 20px;
         }
+        #wordSuggestion {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -50,13 +54,89 @@
     <button id="startButton" onclick="startGame()">Start</button>
     <button id="suggestButton" onclick="suggestWord()">Suggest Word</button>
     <div id="timer"></div>
+    <div id="wordSuggestion"></div>
 
     <script>
         const prompts = [
             "Exercising is like rap music because...",
             "Cooking is like painting because...",
-            // Add more prompts here
+            "Reading is like traveling because...",
+            "Learning is like building a house because...",
+            "Friendship is like a garden because...",
+            "Problem-solving is like playing chess because...",
+            "Listening is like a flashlight in the dark because...",
+            "Creativity is like a blank canvas because...",
+            "Time management is like a jigsaw puzzle because...",
+            "Success is like a well-cooked meal because...",
+            "Communication is like a dance because...",
+            "Decision-making is like choosing a path in a forest because...",
+            "Curiosity is like a treasure hunt because...",
+            "Patience is like fishing because...",
+            "Adaptability is like being a chameleon because...",
+            "Mistakes are like stepping stones because...",
+            "Leadership is like conducting an orchestra because...",
+            "Problem-solving is like detective work because...",
+            "Learning a new language is like unlocking a secret code because...",
+            "Teamwork is like a symphony because...",
+            "Setting goals is like plotting a course on a map because...",
+            "Innovation is like exploring uncharted territory because...",
+            "Self-discipline is like a muscle because...",
+            "Friendship is like a book club because...",
+            "Creativity is like a spark because...",
+            "Perseverance is like climbing a mountain because...",
+            "Problem-solving is like untangling a knot because...",
+            "Communication is like a puzzle because...",
+            "Collaboration is like a potluck dinner because...",
+            "Decision-making is like navigating a crossroads because...",
+            "Learning a new skill is like adding a tool to your toolbox because...",
+            "Resilience is like a rubber band because...",
+            "Success is like a puzzle because...",
+            "Setting boundaries is like creating a fence because...",
+            "Exploring new ideas is like a treasure hunt because...",
+            "Time management is like conducting an orchestra because...",
+            "Problem-solving is like solving a mystery because...",
+            "Leadership is like sailing a ship because...",
+            "Creativity is like a garden because...",
+            "Change is like a river because...",
+            "Communication is like a bridge because...",
+            "Learning is like planting seeds because...",
+            "Adaptability is like being a chameleon because...",
+            "Risk-taking is like surfing because...",
+            "Mistakes are like stepping stones because...",
+            "Leadership is like climbing a mountain because...",
+            "Decision-making is like solving a puzzle because...",
+            "Creativity is like a blank canvas because...",
+            "Innovation is like exploring uncharted territory because...",
+            "Self-discipline is like a compass because...",
+            "Friendship is like a mosaic because...",
+            "Collaboration is like a team sport because...",
+            "Setting goals is like planning a road trip because...",
+            "Perseverance is like running a marathon because...",
+            "Problem-solving is like detective work because...",
+            "Communication is like a dance because...",
+            "Decision-making is like choosing a path in a maze because...",
+            "Curiosity is like a compass because...",
+            "Adaptability is like being a chameleon because...",
+            "Mistakes are like opportunities because...",
+            "Leadership is like conducting an orchestra because...",
+            "Teamwork is like a puzzle because...",
+            "Setting goals is like planting seeds because...",
+            "Innovation is like exploring new horizons because...",
+            "Self-discipline is like a roadmap because...",
+            "Friendship is like a symphony because...",
+            "Collaboration is like a potluck dinner because...",
+            "Change is like a butterfly because...",
+            "Communication is like a quilt because...",
+            "Learning is like climbing a staircase because...",
+            "Adaptability is like being a chameleon because...",
+            "Risk-taking is like a tightrope walk because...",
+            "Mistakes are like road signs because...",
+            "Leadership is like navigating a ship through stormy seas because...",
+            "Decision-making is like solving a puzzle because...",
+            "Creativity is like a garden because..."
         ];
+
+        const suggestedWords = ["Word1", "Word2", "Word3", /* Add more words here */];
 
         let timer;
         let timeRemaining = 51; // Default time is 51 seconds
@@ -94,26 +174,4 @@
         }
 
         function showRandomWord() {
-            const randomWords = ["Word1", "Word2", "Word3", /* Add more words here */];
-            const randomIndex = Math.floor(Math.random() * randomWords.length);
-            const promptElement = document.getElementById('prompt');
-            promptElement.innerHTML = randomWords[randomIndex];
-        }
-
-        function updateTimer() {
-            timeRemaining--;
-            document.getElementById('timer').innerHTML = 'Time Remaining: ' + timeRemaining + 's';
-
-            if (timeRemaining <= 0) {
-                clearInterval(timer);
-                document.getElementById('prompt').innerHTML = 'Game Over';
-            }
-        }
-
-        function startTimer() {
-            clearInterval(timer);
-            timer = setInterval(updateTimer, 1000);
-        }
-    </script>
-</body>
-</html>
+            const randomIndex = Math.floor(Math.random() * suggestedWords
