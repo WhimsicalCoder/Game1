@@ -46,15 +46,15 @@
             display: flex;
             align-items: center;
         }
-        .sand-timer {
+        .sand-watch {
             width: 20px;
             height: 20px;
-            border: 1px solid #ccc;
+            background: linear-gradient(to bottom, #FFD700, #FFA500, #FF6347);
             border-radius: 50%;
             margin-right: 10px;
-            animation: sandTimer 1s infinite linear alternate;
+            animation: sandWatch 1s infinite linear alternate;
         }
-        @keyframes sandTimer {
+        @keyframes sandWatch {
             0% {
                 transform: translateY(0);
             }
@@ -66,10 +66,10 @@
 </head>
 <body>
     <div id="prompt" class="bar">
-        <div>Prompt: <span id="promptText"></span></div>
+        <div><span id="promptText"></span></div>
     </div>
     <div id="timer" class="bar">
-        <div class="sand-timer"></div>
+        <div class="sand-watch"></div>
         <span id="timeRemaining">Time Remaining: 51s</span>
     </div>
     <button id="startButton" onclick="startGame()">Start</button>
@@ -87,7 +87,7 @@
 
         function startGame() {
             clearInterval(timer);
-            timeRemaining = 51;
+            timeRemaining = document.getElementById('timeInput').value || 51;
             document.getElementById('timeRemaining').innerHTML = 'Time Remaining: ' + timeRemaining + 's';
             showRandomPrompt();
             timer = setInterval(updateTimer, 1000);
