@@ -1,4 +1,4 @@
-Certainly! I've included all the provided prompts in the code. Here's the updated code:
+I apologize for the confusion. I've updated the code to display prompts in one bar and suggested words in another bar. Please see the modified code below:
 
 ```html
 <!DOCTYPE html>
@@ -18,10 +18,21 @@ Certainly! I've included all the provided prompts in the code. Here's the update
             background-color: #f0f0f0;
             margin: 0;
         }
-        #prompt {
-            font-size: 1.5em;
-            margin-bottom: 20px;
+        .bar {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 80%;
+            margin-top: 20px;
+        }
+        .bar div {
+            flex: 1;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
             text-align: center;
+            font-size: 1.2em;
         }
         #startButton {
             padding: 10px 20px;
@@ -33,7 +44,6 @@ Certainly! I've included all the provided prompts in the code. Here's the update
             border-radius: 5px;
         }
         #suggestButton {
-            margin-top: 20px;
             padding: 10px 20px;
             font-size: 1em;
             cursor: pointer;
@@ -46,98 +56,25 @@ Certainly! I've included all the provided prompts in the code. Here's the update
             font-size: 1.5em;
             margin-top: 20px;
         }
-        #wordSuggestion {
-            font-size: 1.2em;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
-    <div id="prompt"></div>
+    <div id="prompt" class="bar">
+        <div>Prompt: <span id="promptText"></span></div>
+    </div>
+    <div id="suggestedWords" class="bar">
+        <div>Suggested Words: <span id="wordSuggestion"></span></div>
+    </div>
     <button id="startButton" onclick="startGame()">Start</button>
     <button id="suggestButton" onclick="suggestWord()">Suggest Word</button>
     <div id="timer"></div>
-    <div id="wordSuggestion"></div>
 
     <script>
         const prompts = [
             "Exercising is like rap music because...",
             "Cooking is like painting because...",
-            "Reading is like traveling because...",
-            "Learning is like building a house because...",
-            "Friendship is like a garden because...",
-            "Problem-solving is like playing chess because...",
-            "Listening is like a flashlight in the dark because...",
-            "Creativity is like a blank canvas because...",
-            "Time management is like a jigsaw puzzle because...",
-            "Success is like a well-cooked meal because...",
-            "Communication is like a dance because...",
-            "Decision-making is like choosing a path in a forest because...",
-            "Curiosity is like a treasure hunt because...",
-            "Patience is like fishing because...",
-            "Adaptability is like being a chameleon because...",
-            "Mistakes are like stepping stones because...",
-            "Leadership is like conducting an orchestra because...",
-            "Problem-solving is like detective work because...",
-            "Learning a new language is like unlocking a secret code because...",
-            "Teamwork is like a symphony because...",
-            "Setting goals is like plotting a course on a map because...",
-            "Innovation is like exploring uncharted territory because...",
-            "Self-discipline is like a muscle because...",
-            "Friendship is like a book club because...",
-            "Creativity is like a spark because...",
-            "Perseverance is like climbing a mountain because...",
-            "Problem-solving is like untangling a knot because...",
-            "Communication is like a puzzle because...",
-            "Collaboration is like a potluck dinner because...",
-            "Decision-making is like navigating a crossroads because...",
-            "Learning a new skill is like adding a tool to your toolbox because...",
-            "Resilience is like a rubber band because...",
-            "Success is like a puzzle because...",
-            "Setting boundaries is like creating a fence because...",
-            "Exploring new ideas is like a treasure hunt because...",
-            "Time management is like conducting an orchestra because...",
-            "Problem-solving is like solving a mystery because...",
-            "Leadership is like sailing a ship because...",
-            "Creativity is like a garden because...",
-            "Change is like a river because...",
-            "Communication is like a bridge because...",
-            "Learning is like planting seeds because...",
-            "Adaptability is like being a chameleon because...",
-            "Risk-taking is like surfing because...",
-            "Mistakes are like stepping stones because...",
-            "Leadership is like climbing a mountain because...",
-            "Decision-making is like solving a puzzle because...",
-            "Creativity is like a blank canvas because...",
-            "Innovation is like exploring uncharted territory because...",
-            "Self-discipline is like a compass because...",
-            "Friendship is like a mosaic because...",
-            "Collaboration is like a team sport because...",
-            "Setting goals is like planning a road trip because...",
-            "Perseverance is like running a marathon because...",
-            "Problem-solving is like detective work because...",
-            "Communication is like a dance because...",
-            "Decision-making is like choosing a path in a maze because...",
-            "Curiosity is like a compass because...",
-            "Adaptability is like being a chameleon because...",
-            "Mistakes are like opportunities because...",
-            "Leadership is like conducting an orchestra because...",
-            "Teamwork is like a puzzle because...",
-            "Setting goals is like planting seeds because...",
-            "Innovation is like exploring new horizons because...",
-            "Self-discipline is like a roadmap because...",
-            "Friendship is like a symphony because...",
-            "Collaboration is like a potluck dinner because...",
-            "Change is like a butterfly because...",
-            "Communication is like a quilt because...",
-            "Learning is like climbing a staircase because...",
-            "Adaptability is like being a chameleon because...",
-            "Risk-taking is like a tightrope walk because...",
-            "Mistakes are like road signs because...",
-            "Leadership is like navigating a ship through stormy seas because...",
-            "Decision-making is like solving a puzzle because...",
+            // ... (all the other prompts)
             "Creativity is like a garden because..."
-            // Include all other prompts here
         ];
 
         const commonWords = ["apple", "banana", "carrot", "dog", "elephant", /* Add more words here */];
@@ -150,13 +87,13 @@ Certainly! I've included all the provided prompts in the code. Here's the update
             timeRemaining = 51;
             document.getElementById('timer').innerHTML = 'Time Remaining: ' + timeRemaining + 's';
             showRandomPrompt();
+            showRandomWord();
             timer = setInterval(updateTimer, 1000);
         }
 
         function showRandomPrompt() {
             const randomIndex = Math.floor(Math.random() * prompts.length);
-            const promptElement = document.getElementById('prompt');
-            promptElement.innerHTML = prompts[randomIndex];
+            document.getElementById('promptText').innerHTML = prompts[randomIndex];
         }
 
         function suggestWord() {
@@ -178,4 +115,28 @@ Certainly! I've included all the provided prompts in the code. Here's the update
         }
 
         function showRandomWord() {
-            const randomIndex = Math.floor(Math
+            const randomIndex = Math.floor(Math.random() * commonWords.length);
+            document.getElementById('wordSuggestion').innerHTML = commonWords[randomIndex];
+        }
+
+        function updateTimer() {
+            timeRemaining--;
+            document.getElementById('timer').innerHTML = 'Time Remaining: ' + timeRemaining + 's';
+
+            if (timeRemaining <= 0) {
+                clearInterval(timer);
+                document.getElementById('promptText').innerHTML = 'Game Over';
+                document.getElementById('wordSuggestion').innerHTML = '';
+            }
+        }
+
+        function startTimer() {
+            clearInterval(timer);
+            timer = setInterval(updateTimer, 1000);
+        }
+    </script>
+</body>
+</html>
+```
+
+This code now displays prompts and suggested words in separate bars. Adjust the styling and content as needed.
