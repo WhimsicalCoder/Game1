@@ -15,37 +15,21 @@
             background-color: #f0f0f0;
             margin: 0;
         }
-        #promptText {
-            margin: 20px;
-            padding: 20px;
+        .bar {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 80%;
+            margin-top: 20px;
+        }
+        .bar div {
+            flex: 1;
+            margin: 10px;
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             text-align: center;
-            font-size: 1.5em;
-        }
-        #analogWatch {
-            width: 100px;
-            height: 100px;
-            background: white;
-            border: 2px solid #333;
-            border-radius: 50%;
-            position: relative;
-            margin-bottom: 20px;
-        }
-        .hand {
-            position: absolute;
-            background: #333;
-            height: 50%;
-            width: 2px;
-            top: 50%;
-            left: 50%;
-            transform-origin: 50% 100%;
-            transform: translate(-50%, -100%) rotate(90deg);
-            transition: transform 1s linear;
-        }
-        #timeRemaining {
-            font-size: 1.5em;
-            margin-bottom: 20px;
+            font-size: 1.2em;
         }
         #startButton {
             padding: 10px 20px;
@@ -56,36 +40,74 @@
             border: none;
             border-radius: 5px;
         }
+        #suggestButton {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #timer {
+            font-size: 1.5em;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .sand-clock {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: sandClock 1s infinite linear alternate;
+        }
+        @keyframes sandClock {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(180deg);
+            }
+        }
     </style>
 </head>
 <body>
-    <div id="promptText"></div>
-    <div id="analogWatch">
-        <div class="hand" id="hourHand"></div>
-        <div class="hand" id="minuteHand"></div>
+    <div id="prompt" class="bar">
+        <div>Prompt: <span id="promptText"></span></div>
     </div>
-    <div id="timeRemaining">Time Remaining: 51s</div>
+    <div id="suggestedWords" class="bar">
+        <div>Suggested Words: <span id="wordSuggestion"></span></div>
+    </div>
+    <div id="timer" class="bar">
+        <div class="sand-clock"></div>
+        <span id="timeRemaining">Time Remaining: 51s</span>
+    </div>
     <button id="startButton" onclick="startGame()">Start</button>
+    <button id="suggestButton" onclick="suggestWord()">Suggest Word</button>
 
     <script>
         const prompts = [
             "Exercising is like rap music because...",
             "Cooking is like painting because...",
-            "Reading is like traveling because...",
             // ... (all the other prompts)
             "Creativity is like a garden because..."
         ];
 
+        const commonWords = ["apple", "banana", "carrot", "dog", "elephant", /* Add more words here */];
+
         let timer;
         let timeRemaining = 51; // Default time is 51 seconds
+        let suggestWordOption = true;
 
         function startGame() {
             clearInterval(timer);
-            timeRemaining = document.getElementById('timeInput').value || 51;
+            timeRemaining = 51;
             document.getElementById('timeRemaining').innerHTML = 'Time Remaining: ' + timeRemaining + 's';
-            resetWatchHands();
-            timer = setInterval(updateWatch, 1000);
-            showRandomPrompt(); // Show the first prompt immediately
+            showRandomPrompt();
+            if (suggestWordOption) showRandomWord();
+            timer = setInterval(updateTimer, 1000);
         }
 
         function showRandomPrompt() {
@@ -93,31 +115,26 @@
             document.getElementById('promptText').innerHTML = prompts[randomIndex];
         }
 
-        function updateWatch() {
-            const hourHand = document.getElementById('hourHand');
-            const minuteHand = document.getElementById('minuteHand');
+        function suggestWord() {
+            suggestWordOption = !suggestWordOption;
+            const suggestButton = document.getElementById('suggestButton');
+            suggestButton.innerHTML = suggestWordOption ? "Disable Suggest Word" : "Enable Suggest Word";
+        }
 
-            const now = new Date();
-            const hours = now.getHours() % 12;
-            const minutes = now.getMinutes();
+        function showRandomWord() {
+            const randomIndex = Math.floor(Math.random() * commonWords.length);
+            document.getElementById('wordSuggestion').innerHTML = commonWords[randomIndex];
+        }
 
-            const hourDeg = (hours + minutes / 60) * 30;
-            const minuteDeg = minutes * 6;
-
-            hourHand.style.transform = `translate(-50%, -100%) rotate(${hourDeg}deg)`;
-            minuteHand.style.transform = `translate(-50%, -100%) rotate(${minuteDeg}deg)`;
-
+        function updateTimer() {
             timeRemaining--;
+            document.getElementById('timeRemaining').innerHTML = 'Time Remaining: ' + timeRemaining + 's';
+
             if (timeRemaining <= 0) {
                 clearInterval(timer);
                 document.getElementById('promptText').innerHTML = 'Game Over';
-                resetWatchHands();
+                document.getElementById('wordSuggestion').innerHTML = '';
             }
-        }
-
-        function resetWatchHands() {
-            document.getElementById('hourHand').style.transform = 'translate(-50%, -100%) rotate(90deg)';
-            document.getElementById('minuteHand').style.transform = 'translate(-50%, -100%) rotate(90deg)';
         }
     </script>
 </body>
