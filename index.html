@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Prompt Generator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        #prompt {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        #startButton {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #suggestButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #timer {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="prompt"></div>
+    <button id="startButton" onclick="startGame()">Start</button>
+    <button id="suggestButton" onclick="suggestWord()">Suggest Word</button>
+    <div id="timer"></div>
+
+    <script>
+        const prompts = [
+            "Exercising is like rap music because...",
+            "Cooking is like painting because...",
+            // Add more prompts here
+        ];
+
+        let timer;
+        let timeRemaining = 51; // Default time is 51 seconds
+
+        function startGame() {
+            clearInterval(timer);
+            timeRemaining = 51;
+            document.getElementById('timer').innerHTML = 'Time Remaining: ' + timeRemaining + 's';
+            showRandomPrompt();
+            timer = setInterval(updateTimer, 1000);
+        }
+
+        function showRandomPrompt() {
+            const randomIndex = Math.floor(Math.random() * prompts.length);
+            const promptElement = document.getElementById('prompt');
+            promptElement.innerHTML = prompts[randomIndex];
+        }
+
+        function suggestWord() {
+            clearInterval(timer);
+            let i = 0;
+            const suggestButton = document.getElementById('suggestButton');
+            suggestButton.disabled = true;
+
+            const suggestInterval = setInterval(() => {
+                showRandomWord();
+                i++;
+
+                if (i === 10 || i >= timeRemaining) {
+                    clearInterval(suggestInterval);
+                    suggestButton.disabled = false;
+                    startTimer();
+                }
+            }, 15000);
+        }
+
+        function showRandomWord() {
+            const randomWords = ["Word1", "Word2", "Word3", /* Add more words here */];
+            const randomIndex = Math.floor(Math.random() * randomWords.length);
+            const promptElement = document.getElementById('prompt');
+            promptElement.innerHTML = randomWords[randomIndex];
+        }
+
+        function updateTimer() {
+            timeRemaining--;
+            document.getElementById('timer').innerHTML = 'Time Remaining: ' + timeRemaining + 's';
+
+            if (timeRemaining <= 0) {
+                clearInterval(timer);
+                document.getElementById('prompt').innerHTML = 'Game Over';
+            }
+        }
+
+        function startTimer() {
+            clearInterval(timer);
+            timer = setInterval(updateTimer, 1000);
+        }
+    </script>
+</body>
+</html>
