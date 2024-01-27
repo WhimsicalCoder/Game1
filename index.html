@@ -40,35 +40,26 @@
             border: none;
             border-radius: 5px;
         }
-        #suggestButton {
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
         #timer {
             font-size: 1.5em;
             margin-top: 20px;
             display: flex;
             align-items: center;
         }
-        .sand-clock {
+        .sand-timer {
             width: 20px;
             height: 20px;
             border: 1px solid #ccc;
             border-radius: 50%;
             margin-right: 10px;
-            animation: sandClock 1s infinite linear alternate;
+            animation: sandTimer 1s infinite linear alternate;
         }
-        @keyframes sandClock {
+        @keyframes sandTimer {
             0% {
-                transform: rotate(0deg);
+                transform: translateY(0);
             }
             100% {
-                transform: rotate(180deg);
+                transform: translateY(50%);
             }
         }
     </style>
@@ -77,15 +68,11 @@
     <div id="prompt" class="bar">
         <div>Prompt: <span id="promptText"></span></div>
     </div>
-    <div id="suggestedWords" class="bar">
-        <div>Suggested Words: <span id="wordSuggestion"></span></div>
-    </div>
     <div id="timer" class="bar">
-        <div class="sand-clock"></div>
+        <div class="sand-timer"></div>
         <span id="timeRemaining">Time Remaining: 51s</span>
     </div>
     <button id="startButton" onclick="startGame()">Start</button>
-    <button id="suggestButton" onclick="suggestWord()">Suggest Word</button>
 
     <script>
         const prompts = [
@@ -95,35 +82,20 @@
             "Creativity is like a garden because..."
         ];
 
-        const commonWords = ["apple", "banana", "carrot", "dog", "elephant", /* Add more words here */];
-
         let timer;
         let timeRemaining = 51; // Default time is 51 seconds
-        let suggestWordOption = true;
 
         function startGame() {
             clearInterval(timer);
             timeRemaining = 51;
             document.getElementById('timeRemaining').innerHTML = 'Time Remaining: ' + timeRemaining + 's';
             showRandomPrompt();
-            if (suggestWordOption) showRandomWord();
             timer = setInterval(updateTimer, 1000);
         }
 
         function showRandomPrompt() {
             const randomIndex = Math.floor(Math.random() * prompts.length);
             document.getElementById('promptText').innerHTML = prompts[randomIndex];
-        }
-
-        function suggestWord() {
-            suggestWordOption = !suggestWordOption;
-            const suggestButton = document.getElementById('suggestButton');
-            suggestButton.innerHTML = suggestWordOption ? "Disable Suggest Word" : "Enable Suggest Word";
-        }
-
-        function showRandomWord() {
-            const randomIndex = Math.floor(Math.random() * commonWords.length);
-            document.getElementById('wordSuggestion').innerHTML = commonWords[randomIndex];
         }
 
         function updateTimer() {
@@ -133,7 +105,6 @@
             if (timeRemaining <= 0) {
                 clearInterval(timer);
                 document.getElementById('promptText').innerHTML = 'Game Over';
-                document.getElementById('wordSuggestion').innerHTML = '';
             }
         }
     </script>
